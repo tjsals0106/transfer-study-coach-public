@@ -1,19 +1,21 @@
 # Transfer Study Coach Pipeline
 
-A sanitized archival snapshot of a Google Apps Script prototype for spaced vocabulary review, problem re-review, and study-pattern summaries. This is not a production deployment.
+This repository contains a sanitized snapshot of the latest source read from the separate Apps Script test project. It is an isolated synthetic-test project, not a production deployment.
 
 ## Files
 
-- `Code.gs.txt` is attached to the `v0.1.0-archival-snapshot` release. It contains 41,848 Unicode characters (48,229 UTF-8 bytes), SHA-256 `96d2a1b54bb20d270e4bf040ba49de5f21c514035195985b0232447e0ecf48fe`.
-- `TEST_SPREADSHEET_ID` remains `REPLACE_WITH_TEST_SPREADSHEET_ID`. Personal study data, actual source links, and spreadsheet identifiers are excluded.
-- `appsscript.json` is in the repository root. It specifies the V8 runtime, `Asia/Seoul`, and only the `spreadsheets.currentonly` OAuth scope.
+- `Code.gs.txt`: 47325 Unicode characters, 53796 UTF-8 bytes; SHA-256 `26375ae684ad0bf9508677889a382370955a6d34489e2c560cdc149014eb907b`. An identifier altered during anonymization was normalized to `isSyntheticQuestion`. This correction was not compile-tested.
+- `appsscript.json`: V8 runtime, `Asia/Seoul`, and only the `spreadsheets.currentonly` OAuth scope.
+- The real spreadsheet ID is replaced with `REPLACE_WITH_TEST_SPREADSHEET_ID`. Question identifiers are replaced with synthetic labels. Study materials and their links are excluded.
+
+## What is included
+
+The script contains the study-coach menu and logic for spaced vocabulary review, problem re-review, recovery/idempotency, coaching summaries, and synthetic tests. `setupPipeline()` is intentionally disabled in this isolated copy.
 
 ## Validation and limits
 
-The published `Code.gs.txt` is an earlier archival snapshot. A separate later source of 47,110 characters was reported to pass five recovery/date-boundary cases and two overlapping concurrent-save cases in isolated Apps Script tests. The menu popup was not verified because the test environment lacked the required `script.container.ui` permission. Those results do not establish that this earlier snapshot passed those tests.
-
-The script was not executed or deployed during publication, and the original Apps Script project and spreadsheet were not modified. No live-use safety validation is claimed.
+An earlier isolated Apps Script validation reported five recovery/date-boundary checks and two overlapping concurrent-save cases passing. The menu-popup route was not verified because the test environment lacked the `script.container.ui` permission. This report does not establish live-use safety. The source in this repository was not run or deployed during publication.
 
 ## Safe use
 
-Keep `TEST_SPREADSHEET_ID` as a placeholder unless using a dedicated disposable synthetic test spreadsheet. Do not substitute an original or live study spreadsheet ID. `setupPipeline()` is disabled in this snapshot. `runSyntheticIntegrationTests()` creates tabs and writes synthetic rows to the spreadsheet selected by `TEST_SPREADSHEET_ID`; never run it against an original or live spreadsheet.
+Do not substitute an original or live study spreadsheet ID. `runSyntheticIntegrationTests()`, `runSyntheticResumeTests()`, and `showConcurrentSyntheticTest()` create or modify synthetic tabs and rows in the spreadsheet selected by `TEST_SPREADSHEET_ID`; use only a dedicated disposable synthetic sheet. The original spreadsheet and existing Apps Script project were not modified.
